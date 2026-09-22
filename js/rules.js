@@ -33,8 +33,8 @@
      * Tọa độ ô mục tiêu của từng đội
      */
     const GOALS = {
-        [TEAMS.TEAM_1]: { x: 0, y: 0, label: 'A0' }, // Mục tiêu của Đội 1 (Đội 2 cần vào đây)
-        [TEAMS.TEAM_2]: { x: 8, y: 8, label: 'I9' }  // Mục tiêu của Đội 2 (Đội 1 cần vào đây)
+        [TEAMS.TEAM_1]: { x: 0, y: 0, label: 'A1' }, // Mục tiêu của Đội 1 (Đội 2 cần vào đây - cứ điểm A1)
+        [TEAMS.TEAM_2]: { x: 8, y: 8, label: 'I9' }  // Mục tiêu của Đội 2 (Đội 1 cần vào đây - cứ điểm I9)
     };
 
     const INITIAL_POSITIONS = {
@@ -104,8 +104,6 @@
      */
     function coordToAlgebraic(x, y) {
         if (x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE) return '';
-        // Hỗ trợ hiển thị A0 cho góc (0,0) nếu người dùng muốn
-        if (x === 0 && y === 0) return 'A0';
         return `${COLUMNS[x]}${y + 1}`;
     }
 
@@ -383,6 +381,35 @@
     }
 
     /**
+     * Đếm chi tiết số lượng từng loại quân cờ còn lại của mỗi đội (hỗ trợ cập nhật HUD).
+     * @param {any} boardState 
+     * @returns {{
+     *   team1: { bua: number, bao: number, keo: number, total: number },
+     *   team2: { bua: number, bao: number, keo: number, total: number }
+     * }}
+     */
+    function countPiecesByType(boardState) {
+        const counts = {
+            [TEAMS.TEAM_1]: { bua: 0, bao: 0, keo: 0, total: 0 },
+            [TEAMS.TEAM_2]: { bua: 0, bao: 0, keo: 0, total: 0 }
+        };
+
+        for (let x = 0; x < BOARD_SIZE; x++) {
+            for (let y = 0; y < BOARD_SIZE; y++) {
+                const piece = getPieceAt(boardState, x, y);
+                if (piece && counts[piece.team]) {
+                    if (counts[piece.team][piece.type] !== undefined) {
+                        counts[piece.team][piece.type]++;
+                    }
+                    counts[piece.team].total++;
+                }
+            }
+        }
+
+        return counts;
+    }
+
+    /**
      * Kiểm tra xem một đội còn nước đi hợp lệ nào không.
      * @param {any} boardState 
      * @param {string} team 
@@ -478,6 +505,7 @@
         getValidMoves,
         hasReachedEnemyGoal,
         countRemainingPieces,
+        countPiecesByType,
         hasAnyValidMoves,
         checkWinCondition
     };

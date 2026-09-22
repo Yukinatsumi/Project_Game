@@ -1,0 +1,43 @@
+/* ========================================================
+   GAME.CSS - Bổ sung hỗ trợ tương tác Kéo Thả (Drag & Drop)
+   và đồng bộ tương thích giữa Person 1 và Person 3 (Yuki)
+   ======================================================== */
+
+.piece {
+    cursor: grab;
+    user-select: none;
+    -webkit-user-drag: element;
+}
+
+.piece:active,
+.piece.dragging {
+    cursor: grabbing;
+    opacity: 0.5;
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+    z-index: 10;
+}
+
+/* Hỗ trợ các lớp màu từ Person 1 (.blue, .red) */
+.piece.blue {
+    background: radial-gradient(circle at 35% 35%, #69c0ff, #096dd9);
+    border: 2px solid #91d5ff;
+    box-shadow: 0 4px 10px rgba(24, 144, 255, 0.5);
+    color: #ffffff;
+}
+
+.piece.red {
+    background: radial-gradient(circle at 35% 35%, #ff7875, #d41818);
+    border: 2px solid #ffa39e;
+    box-shadow: 0 4px 10px rgba(255, 77, 79, 0.5);
+    color: #ffffff;
+}
+
+/* Hỗ trợ lớp màu ô cờ trắng/đen từ Person 1 (.cell.white, .cell.black) */
+.cell.white {
+    background-color: var(--board-light, #21262d);
+}
+
+.cell.black {
+    background-color: var(--board-dark, #161b22);
+}
