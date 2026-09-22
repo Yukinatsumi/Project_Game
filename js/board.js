@@ -114,21 +114,31 @@
                     cell.dataset.notation = Rules.coordToAlgebraic(x, y);
                 }
 
-                // --- SỰ KIỆN KÉO THẢ (Drag & Drop từ Person 1) ---
+                // --- SỰ KIỆN KÉO THẢ (Drag & Drop) ---
                 cell.addEventListener("dragover", (event) => {
                     event.preventDefault();
                     event.dataTransfer.dropEffect = "move";
+                    cell.classList.add("drag-over");
+                });
+
+                cell.addEventListener("dragleave", () => {
+                    cell.classList.remove("drag-over");
                 });
 
                 cell.addEventListener("drop", (event) => {
                     event.preventDefault();
+                    cell.classList.remove("drag-over");
+                    const board = getBoardElement();
+                    if (board) board.classList.remove("is-dragging");
+
                     const draggedData = event.dataTransfer.getData("text/plain");
                     if (!draggedData) return;
 
                     try {
                         const data = JSON.parse(draggedData);
+                        const targetCell = event.target.closest(".cell") || cell;
                         const from = { x: Number(data.x), y: Number(data.y) };
-                        const to = { x: Number(cell.dataset.x), y: Number(cell.dataset.y) };
+                        const to = { x: Number(targetCell.dataset.x), y: Number(targetCell.dataset.y) };
 
                         if (onPieceDropHandler) {
                             onPieceDropHandler(from, to, data.pieceId);
@@ -141,16 +151,17 @@
                 });
 
                 // --- SỰ KIỆN CLICK Ô CỜ ---
-                cell.addEventListener("click", () => {
+                cell.addEventListener("click", (event) => {
+                    const targetCell = event.target.closest(".cell") || cell;
                     const cellCoord = {
-                        x: Number(cell.dataset.x),
-                        y: Number(cell.dataset.y)
+                        x: Number(targetCell.dataset.x),
+                        y: Number(targetCell.dataset.y)
                     };
 
                     if (onCellClickHandler) {
-                        onCellClickHandler(cellCoord, cell);
+                        onCellClickHandler(cellCoord, targetCell);
                     } else if (global.Game && typeof global.Game.handleCellClick === 'function') {
-                        global.Game.handleCellClick(cellCoord, cell);
+                        global.Game.handleCellClick(cellCoord, targetCell);
                     }
                 });
 
@@ -216,6 +227,10 @@
                 event.dataTransfer.effectAllowed = "move";
                 pieceEl.classList.add("dragging");
 
+                // Thêm class is-dragging vào bàn cờ để kích hoạt pointer-events: none trên các quân khác
+                const bEl = getBoardElement();
+                if (bEl) bEl.classList.add("is-dragging");
+
                 // Nếu có game controller, tự động chọn quân cờ này và vẽ gợi ý
                 if (global.Game && typeof global.Game.selectPiece === 'function') {
                     global.Game.selectPiece({ x, y });
@@ -225,6 +240,11 @@
             // Sự kiện DragEnd
             pieceEl.addEventListener("dragend", () => {
                 pieceEl.classList.remove("dragging");
+                const bEl = getBoardElement();
+                if (bEl) {
+                    bEl.classList.remove("is-dragging");
+                    bEl.querySelectorAll(".drag-over").forEach(c => c.classList.remove("drag-over"));
+                }
             });
 
             cell.appendChild(pieceEl);

@@ -41,3 +41,17 @@
 .cell.black {
     background-color: var(--board-dark, #161b22);
 }
+
+/* Xử lý cốt lõi cho Drag & Drop: Khi đang kéo thả quân cờ,
+   tất cả các quân cờ trên bàn cờ tạm thời bỏ qua sự kiện chuột (pointer-events: none)
+   để sự kiện dragover và drop luôn rơi thẳng vào .cell bên dưới, cho phép ăn quân mượt mà 100% */
+.board-grid.is-dragging .piece,
+#board.is-dragging .piece {
+    pointer-events: none;
+}
+
+/* Hiệu ứng khi rê quân cờ qua ô có thể ăn hoặc di chuyển */
+.cell.drag-over {
+    box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.8) !important;
+    border: 2px dashed #ffd700 !important;
+}

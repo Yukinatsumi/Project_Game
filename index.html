@@ -155,12 +155,11 @@
           </div>
 
           <div style="display: flex; gap: 8px;">
-            <button id="btnCreateRoom" class="btn btn-primary" style="flex: 1;">➕ Tạo Phòng</button>
-            <button id="btnQuickMatch" class="btn btn-secondary" style="flex: 1;">⚡ Ghép Nhanh</button>
+            <button id="btnCreateRoom" class="btn btn-primary" style="width: 100%;">➕ Tạo Phòng (nhận liên kết mời)</button>
           </div>
 
           <div style="display: flex; gap: 8px;">
-            <input id="joinRoomInput" class="input-field" type="text" placeholder="Mã phòng (VD: OTT8)" maxlength="6" style="text-transform: uppercase;">
+            <input id="joinRoomInput" class="input-field" type="text" placeholder="Mã phòng 8 ký tự (VD: OTT9X8A1)" maxlength="8" style="text-transform: uppercase;">
             <button id="btnJoinRoom" class="btn btn-secondary">Vào Phòng</button>
           </div>
 
@@ -168,13 +167,19 @@
           <div id="roomCodeBox" style="display: none; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 8px;">
             <span style="font-size: 12px; color: var(--text-muted);">Mã phòng:</span>
             <div class="room-code-badge">
-              <span id="roomCodeDisplay">----</span>
-              <button id="btnCopyCode" class="copy-btn" title="Sao chép">📋</button>
+              <span id="roomCodeDisplay">--------</span>
+              <button id="btnCopyCode" class="copy-btn" title="Sao chép liên kết mời">📋</button>
             </div>
           </div>
 
+          <!-- Room action buttons (Swap roles, Leave) -->
+          <div id="roomActionsBox" style="display: none; gap: 8px;">
+            <button id="btnSwapRole" class="btn btn-secondary" style="flex: 1;" title="Đổi phe Đỏ / Xanh (chỉ trước nước đi đầu tiên)">🔀 Đổi Phe</button>
+            <button id="btnLeaveRoom" class="btn btn-secondary" style="flex: 1;" title="Rời phòng">🚪 Thoát Phòng</button>
+          </div>
+
           <div id="roomStatusText" style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
-            Đang kết nối máy chủ...
+            Bấm "Tạo Phòng" rồi gửi liên kết (nút 📋) cho bạn bè để cùng chơi qua playhtml.fun.
           </div>
         </div>
       </div>

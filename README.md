@@ -40,5 +40,3 @@ Trò chơi **Cờ Oẳn Tù Tì 9x9 (Rock-Paper-Scissors Chess)** kết hợp gi
 1. 👥 **2 Người Cùng Máy (Pass & Play)**: Chơi luân phiên đổi lượt trực tiếp trên cùng một màn hình.
 2. 🤖 **Đấu Với Máy (AI Bot)**: Luyện tập với trí tuệ nhân tạo Heuristic tự động tính toán nước đi thông minh.
 3. 🌐 **Phòng Đấu Trực Tuyến**: Giao diện tạo phòng, mã PIN và kênh chat trong trận đấu.
-
----

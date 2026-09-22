@@ -1,0 +1,6 @@
+# Công cụ / cấu hình cục bộ - không commit
+.claude/
+
+# Rác hệ điều hành / trình soạn thảo
+.DS_Store
+Thumbs.db
